@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Noël – Accès spécial</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #1f5f3b, #0b2e1a);
+  font-family: "Georgia", serif;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.08);
+  border: 3px solid rgba(255, 215, 0, 0.4);
+  border-radius: 25px;
+  padding: 70px;
+  text-align: center;
+  width: 460px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+}
+
+h1 {
+  margin-top: 0;
+  color: #ffd700;
+}
+
+p {
+  opacity: 0.85;
+  margin-bottom: 30px;
+}
+
+/* === LUMIÈRES === */
+.bulb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0.2;
+  box-shadow: 0 0 12px currentColor;
+  transition: opacity 0.15s;
+}
+
+.blue  { background:#4fc3f7; color:#4fc3f7; }
+.red   { background:#ff5252; color:#ff5252; }
+.green { background:#69f0ae; color:#69f0ae; }
+.gold  { background:gold; color:gold; }
+
+/* Haut (MORSE) */
+.lights-top {
+  position:absolute;
+  top:-20px; left:-20px; right:-20px;
+  display:flex;
+  justify-content:space-around;
+}
+
+/* Bas */
+.lights-bottom {
+  position:absolute;
+  bottom:-20px; left:-20px; right:-20px;
+  display:flex;
+  justify-content:space-around;
+}
+
+/* Côtés */
+.lights-left, .lights-right {
+  position:absolute;
+  top:20px; bottom:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
+}
+
+.lights-left { left:-20px; }
+.lights-right { right:-20px; }
+
+/* Code */
+input {
+  background: rgba(0,0,0,0.4);
+  border:2px solid #ffd700;
+  border-radius:10px;
+  padding:10px;
+  width:120px;
+  font-size:26px;
+  text-align:center;
+  letter-spacing:6px;
+  color:#fff;
+  outline:none;
+}
+
+button {
+  margin-top:25px;
+  background:linear-gradient(135deg,#c40000,#ff2e2e);
+  border:none;
+  color:white;
+  padding:12px 30px;
+  border-radius:30px;
+  cursor:pointer;
+}
+
+.error {
+  margin-top:15px;
+  color:#ffb3b3;
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <!-- HAUT : MORSE -->
+  <div class="lights-top">
+    <div class="bulb blue"  id="bulbX"></div>
+    <div class="bulb red"   id="bulbM"></div>
+    <div class="bulb green" id="bulbA"></div>
+    <div class="bulb gold"  id="bulbS"></div>
+  </div>
+
+  <!-- CÔTÉS -->
+  <div class="lights-left">
+    <div class="bulb gold parasite"></div>
+    <div class="bulb red parasite"></div>
+    <div class="bulb green parasite"></div>
+  </div>
+
+  <div class="lights-right">
+    <div class="bulb blue parasite"></div>
+    <div class="bulb gold parasite"></div>
+    <div class="bulb red parasite"></div>
+  </div>
+
+  <!-- BAS -->
+  <div class="lights-bottom">
+    <div class="bulb green parasite"></div>
+    <div class="bulb blue parasite"></div>
+    <div class="bulb gold parasite"></div>
+    <div class="bulb red parasite"></div>
+  </div>
+
+  <h1>Et non, ce n'est pas fini !</h1>
+  <p>Saurez-vous trouver la vérité</p>
+
+  <input id="code" maxlength="4" placeholder="----">
+  <br>
+  <button onclick="check()">Continuer</button>
+  <div class="error" id="error">Dommage essaie encore d:</div>
+</div>
+
+<script>
+/* ===== MORSE ===== */
+const MORSE = {
+  X:"-..-",
+  M:"--",
+  A:".-",
+  S:"..."
+};
+
+const dot=300, dash=800, pause=300, pauseLetter=1500;
+
+function playMorse(el, pattern){
+  let i=0;
+  function next(){
+    if(i>=pattern.length){
+      setTimeout(()=>{i=0; next();}, pauseLetter);
+      return;
+    }
+    const d = pattern[i]==="."?dot:dash;
+    el.style.opacity="1";
+    setTimeout(()=>{
+      el.style.opacity="0.2";
+      i++;
+      setTimeout(next,pause);
+    },d);
+  }
+  next();
+}
+
+playMorse(bulbX,MORSE.X);
+playMorse(bulbM,MORSE.M);
+playMorse(bulbA,MORSE.A);
+playMorse(bulbS,MORSE.S);
+
+/* ===== LUMIÈRES PARASITES DÉPHASÉES ===== */
+document.querySelectorAll(".parasite").forEach((b,i)=>{
+  setTimeout(()=>{
+    setInterval(()=>{
+      b.style.opacity = b.style.opacity==="1"?"0.2":"1";
+    },700);
+  }, i*200); // déphasage
+});
+
+/* ===== CODE ===== */
+function check(){
+  const v=document.getElementById("code").value.toUpperCase();
+  if(v==="XMAS") location.href="3.html";
+  else{
+    error.style.display="block";
+    setTimeout(()=>error.style.display="none",2000);
+  }
+}
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Noël – Accès spécial</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at top, #1f5f3b, #0b2e1a);
+      font-family: "Georgia", serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.08);
+      border: 3px solid rgba(255,215,0,0.4);
+      border-radius: 25px;
+      padding: 60px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      width: 500px;
+    }
+
+    h1 {
+      color: #ffd700;
+      margin-top: 0;
+    }
+
+    button {
+      margin-top: 30px;
+      background: linear-gradient(135deg, #c40000, #ff2e2e);
+      border: none;
+      color: white;
+      padding: 15px 40px;
+      font-size: 18px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    video {
+      display: none;
+      margin-top: 30px;
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h1>🎄 Félicitations 🎄</h1>
+    <p>Vous avez résolu toutes les énigmes !</p>
+
+    <button onclick="revelerVideo()">🎁 Ouvrir le cadeau</button>
+
+    <video id="video" controls>
+      <source src="video.mp4" type="video/mp4">
+      Votre navigateur ne supporte pas la vidéo.
+    </video>
+  </div>
+
+  <script>
+    function revelerVideo() {
+      const v = document.getElementById("video");
+      v.style.display = "block";
+      v.play();
+    }
+  </script>
+
+</body>
+</html>
+
